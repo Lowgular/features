@@ -6,10 +6,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { take } from 'rxjs';
-import { AddFeatureCommand } from '../../../application/ports/primary/command/add-feature.command';
+import { CreateFeatureCommand } from '../../../application/ports/primary/command/add-feature.command';
 import {
-  ADD_FEATURE_COMMAND,
-  AddFeatureCommandPort,
+  CREATE_FEATURE_COMMAND,
+  CreateFeatureCommandPort,
 } from '../../../application/ports/primary/command/add-feature.command-port';
 
 @Component({
@@ -26,17 +26,17 @@ export class CreateFeatureComponent {
   });
 
   constructor(
-    @Inject(ADD_FEATURE_COMMAND)
-    private _addFeatureCommand: AddFeatureCommandPort
+    @Inject(CREATE_FEATURE_COMMAND)
+    private _createFeatureCommand: CreateFeatureCommandPort
   ) {}
 
   onNewFeatureFormSubmited(newFeatureForm: FormGroup): void {
     if (newFeatureForm.invalid) {
       return;
     }
-    this._addFeatureCommand
-      .addFeature(
-        new AddFeatureCommand(
+    this._createFeatureCommand
+      .createFeature(
+        new CreateFeatureCommand(
           newFeatureForm.get('title')?.value,
           newFeatureForm.get('description')?.value,
           newFeatureForm.get('type')?.value

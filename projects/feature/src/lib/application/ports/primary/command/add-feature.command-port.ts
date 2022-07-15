@@ -1,9 +1,10 @@
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddFeatureCommand } from './add-feature.command';
+import { CreateFeatureCommand } from './add-feature.command';
 
-export const ADD_FEATURE_COMMAND = new InjectionToken<AddFeatureCommandPort>('ADD_FEATURE_COMMAND');
+export const CREATE_FEATURE_COMMAND =
+  new InjectionToken<CreateFeatureCommandPort>('CREATE_FEATURE_COMMAND');
 
-export interface AddFeatureCommandPort {
-  addFeature(command: AddFeatureCommand): Observable<void>;
+export interface CreateFeatureCommandPort {
+  createFeature(command: CreateFeatureCommand): Observable<void>;
 }
