@@ -4,5 +4,6 @@ export interface FeatureDTO {
   readonly description: string;
   readonly type: string;
   readonly status: string;
-  readonly creator: string[];
+  readonly creator: string;
+  readonly voters: string[];
 }

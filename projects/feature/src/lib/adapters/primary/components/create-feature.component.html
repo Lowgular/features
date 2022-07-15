@@ -1,0 +1,9 @@
+<form
+  [formGroup]="newFeatureForm"
+  (ngSubmit)="onNewFeatureFormSubmited(newFeatureForm)"
+>
+  <input type="text" formControlName="title" placeholder="Title" />
+  <input type="text" formControlName="description" placeholder="Description" />
+  <input type="text" formControlName="type" placeholder="Type" />
+  <input type="submit" value="Submit" />
+</form>
