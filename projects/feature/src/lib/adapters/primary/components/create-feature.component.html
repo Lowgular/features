@@ -1,9 +1,38 @@
+<div class="flex">
+  <p class="mx-auto mb-5 text-white text-2xl">Create feature</p>
+</div>
 <form
   [formGroup]="newFeatureForm"
+  class="flex flex-col items-center"
   (ngSubmit)="onNewFeatureFormSubmited(newFeatureForm)"
 >
-  <input type="text" formControlName="title" placeholder="Title" />
-  <input type="text" formControlName="description" placeholder="Description" />
-  <input type="text" formControlName="type" placeholder="Type" />
-  <input type="submit" value="Submit" />
+  <div
+    class="flex flex-col items-center bg-indigo-50 w-fit p-10 rounded-md mb-5"
+  >
+    <mat-form-field class="w-96">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field class="w-96">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="bug">Bug</mat-option>
+        <mat-option value="feature">Feature</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-96">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+  </div>
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    class="w-min my-5 text-lg"
+  >
+    SUBMIT
+  </button>
 </form>

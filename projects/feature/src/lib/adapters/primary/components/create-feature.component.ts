@@ -5,6 +5,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { CreateFeatureCommand } from '../../../application/ports/primary/command/add-feature.command';
 import {
@@ -27,7 +28,8 @@ export class CreateFeatureComponent {
 
   constructor(
     @Inject(CREATE_FEATURE_COMMAND)
-    private _createFeatureCommand: CreateFeatureCommandPort
+    private _createFeatureCommand: CreateFeatureCommandPort,
+    private router: Router
   ) {}
 
   onNewFeatureFormSubmited(newFeatureForm: FormGroup): void {
@@ -44,5 +46,6 @@ export class CreateFeatureComponent {
       )
       .pipe(take(1))
       .subscribe(() => this.newFeatureForm.reset());
+    this.router.navigate(['/']);
   }
 }
