@@ -4,7 +4,7 @@ import {
   Inject,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { CreateFeatureCommand } from '../../../application/ports/primary/command/add-feature.command';
@@ -21,9 +21,9 @@ import {
 })
 export class CreateFeatureComponent {
   readonly newFeatureForm: FormGroup = new FormGroup({
-    title: new FormControl(),
-    description: new FormControl(),
-    type: new FormControl(),
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    type: new FormControl('', Validators.required),
   });
 
   constructor(
