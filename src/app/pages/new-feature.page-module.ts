@@ -5,6 +5,9 @@ import {
   CreateFeatureComponentModule,
   FeaturesStateModule,
   FirebaseFeaturesServiceModule,
+  InMemoryFeaturesStorageModule,
+  LoadFeaturesResolver,
+  LoadFeaturesResolverModule,
 } from '@feature';
 import { NewFeaturePage } from './new-feature.page';
 
@@ -14,12 +17,15 @@ import { NewFeaturePage } from './new-feature.page';
     RouterModule.forChild([
       {
         path: '',
+        resolve: [LoadFeaturesResolver],
         component: NewFeaturePage,
       },
     ]),
     CreateFeatureComponentModule,
     FeaturesStateModule,
     FirebaseFeaturesServiceModule,
+    InMemoryFeaturesStorageModule,
+    LoadFeaturesResolverModule,
   ],
   declarations: [NewFeaturePage],
   providers: [],
