@@ -53,7 +53,6 @@ export class FeaturesState
         type: command.type,
         status: 'pending',
         creator: 'test creator id',
-        voters: ['test creator id'],
       }),
       this._selectsFeatureContext.select().pipe(take(1)),
     ]).pipe(
