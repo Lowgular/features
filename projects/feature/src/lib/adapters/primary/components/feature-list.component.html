@@ -1,0 +1,8 @@
+<ul *ngIf="featureListQuery$ | async as list" class="my-10">
+  <li
+    *ngFor="let feature of list.items"
+    class="flex flex-col items-center bg-indigo-50 w-96 p-5 rounded-md my-3 font-medium"
+  >
+    {{ feature }}
+  </li>
+</ul>
