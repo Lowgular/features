@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { LoadFeaturesCommandPort } from '../ports/primary/command/load-features.command-port';
+import { GetsCurrentFeatureListQueryPort } from '../ports/primary/query/gets-current-feature-list.query-port';
 import {
   ADDS_FEATURE_DTO,
   AddsFeatureDtoPort,
@@ -19,12 +20,18 @@ import {
   GetsAllFeatureDtoPort,
 } from '../ports/secondary/dto/gets-all-feature.dto-port';
 import { LoadFeaturesCommand } from '../ports/primary/command/load-features.command';
+import { FeatureListQuery } from '../ports/primary/query/feature-list.query';
+import { FeatureContext } from '../ports/secondary/context/feature.context';
 import { CreateFeatureCommandPort } from '../ports/primary/command/add-feature.command-port';
 import { CreateFeatureCommand } from '../ports/primary/command/add-feature.command';
+import { mapFromFeatureContext } from './feature-list-query.mapper';
 
 @Injectable()
 export class FeaturesState
-  implements CreateFeatureCommandPort, LoadFeaturesCommandPort
+  implements
+    CreateFeatureCommandPort,
+    LoadFeaturesCommandPort,
+    GetsCurrentFeatureListQueryPort
 {
   constructor(
     @Inject(ADDS_FEATURE_DTO) private _addsFeatureDto: AddsFeatureDtoPort,
@@ -66,5 +73,11 @@ export class FeaturesState
         this._setsStateFeatureContext.setState(featureContext)
       )
     );
+  }
+
+  getCurrentFeatureListQuery(): Observable<FeatureListQuery> {
+    return this._selectsFeatureContext
+      .select()
+      .pipe(map((context) => mapFromFeatureContext(context)));
   }
 }

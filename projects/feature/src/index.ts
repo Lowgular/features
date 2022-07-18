@@ -4,3 +4,4 @@ export * from './lib/adapters/secondary/storages/in-memory-features.storage-modu
 export * from './lib/application/state/features.state-module';
 export * from './lib/adapters/primary/resolvers/load-features.resolver';
 export * from './lib/adapters/primary/resolvers/load-features.resolver-module';
+export * from './lib/adapters/primary/components/feature-list.component-module';
