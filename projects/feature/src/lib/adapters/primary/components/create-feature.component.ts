@@ -45,7 +45,9 @@ export class CreateFeatureComponent {
         )
       )
       .pipe(take(1))
-      .subscribe(() => this.newFeatureForm.reset());
-    this.router.navigate(['/']);
+      .subscribe(() => {
+        this.newFeatureForm.reset();
+        this.router.navigate(['/']);
+      });
   }
 }
