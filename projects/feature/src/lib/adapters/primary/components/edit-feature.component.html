@@ -34,3 +34,4 @@
     </button>
   </a>
 </form>
+<div *ngIf="selectedFeatureId$ | async as id">id: {{ id | json }}</div>
