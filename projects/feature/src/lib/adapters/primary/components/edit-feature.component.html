@@ -1,7 +1,11 @@
 <div class="flex">
   <p class="mx-auto mb-5 text-white text-2xl">Edit feature</p>
 </div>
-<form class="flex flex-col items-center">
+<form
+  [formGroup]="editFeatureForm"
+  *ngIf="editFeatureForm$ | async as editFeatureForm"
+  class="flex flex-col items-center"
+>
   <div
     class="flex flex-col items-center bg-indigo-50 w-fit p-10 rounded-md mb-5"
   >
@@ -34,4 +38,4 @@
     </button>
   </a>
 </form>
-<div *ngIf="selectedFeatureId$ | async as id">id: {{ id | json }}</div>
+<div *ngIf="editFeatureForm$ | async as id">id: {{ id | json }}</div>
