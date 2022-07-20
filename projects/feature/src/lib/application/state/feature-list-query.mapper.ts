@@ -11,7 +11,8 @@ export const mapFromFeatureContext = (
         new FeatureListItemQuery(
           feature.title,
           feature.description,
-          feature.type
+          feature.type,
+          feature.id
         )
     )
   );

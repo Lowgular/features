@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   CreateFeatureComponentModule,
+  EditFeatureComponentModule,
   FeatureListComponentModule,
   FeaturesStateModule,
   FirebaseFeaturesServiceModule,
@@ -13,6 +14,7 @@ import {
 import { HomePage } from './home.page';
 import { MatButtonModule } from '@angular/material/button';
 import { NewFeaturePage } from './new-feature.page';
+import { EditFeaturePage } from './edit-feature.page';
 
 @NgModule({
   imports: [
@@ -28,6 +30,10 @@ import { NewFeaturePage } from './new-feature.page';
         path: 'new-feature',
         component: NewFeaturePage,
       },
+      {
+        path: 'edit-feature',
+        component: EditFeaturePage,
+      },
     ]),
     CreateFeatureComponentModule,
     LoadFeaturesResolverModule,
@@ -35,8 +41,9 @@ import { NewFeaturePage } from './new-feature.page';
     FirebaseFeaturesServiceModule,
     InMemoryFeaturesStorageModule,
     FeatureListComponentModule,
+    EditFeatureComponentModule,
   ],
-  declarations: [HomePage, NewFeaturePage],
+  declarations: [HomePage, NewFeaturePage, EditFeaturePage],
   providers: [],
   exports: [],
 })
