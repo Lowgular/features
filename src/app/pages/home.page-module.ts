@@ -31,7 +31,7 @@ import { EditFeaturePage } from './edit-feature.page';
         component: NewFeaturePage,
       },
       {
-        path: 'edit-feature',
+        path: 'edit-feature/:featureId',
         component: EditFeaturePage,
       },
     ]),

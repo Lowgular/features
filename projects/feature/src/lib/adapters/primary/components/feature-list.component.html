@@ -51,7 +51,10 @@
       <div class="w-10/12">
         <div class="flex justify-between">
           <p class="text-lg font-semibold">{{ feature.title }}</p>
-          <a mat-raised-button routerLink="edit-feature" class="text-lg"
+          <a
+            mat-raised-button
+            [routerLink]="'/edit-feature/' + feature.id"
+            class="text-lg"
             >EDIT</a
           >
           <p class="text-pink-500 font-medium">{{ feature.type }}</p>
