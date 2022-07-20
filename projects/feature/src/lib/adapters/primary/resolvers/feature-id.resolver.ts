@@ -5,7 +5,6 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {
   SETS_STATE_FEATURE_ID_CONTEXT,
   SetsStateFeatureIdContextPort,
@@ -22,7 +21,7 @@ export class FeatureIdResolver implements Resolve<void> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<void> {
-    return this._setsStateFeatureIdContext.setState({
+    return this._setsStateFeatureIdContext.setFeatureId({
       selectedFeatureId: route.params['featureId'],
     });
   }

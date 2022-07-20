@@ -8,5 +8,5 @@ export const SETS_STATE_FEATURE_ID_CONTEXT =
   );
 
 export interface SetsStateFeatureIdContextPort {
-  setState(state: FeatureIdContext): Observable<void>;
+  setFeatureId(featureId: FeatureIdContext): Observable<void>;
 }
