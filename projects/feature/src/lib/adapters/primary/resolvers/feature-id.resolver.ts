@@ -6,22 +6,22 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
-  SETS_STATE_FEATURE_ID_CONTEXT,
-  SetsStateFeatureIdContextPort,
-} from '../../../application/ports/secondary/context/sets-state-feature-id.context-port';
+  SetFeatureIdCommandPort,
+  SET_FEATURE_ID_COMMAND,
+} from '../../../application/ports/primary/command/set-feature-id.command-port';
 
 @Injectable()
 export class FeatureIdResolver implements Resolve<void> {
   constructor(
-    @Inject(SETS_STATE_FEATURE_ID_CONTEXT)
-    private _setsStateFeatureIdContext: SetsStateFeatureIdContextPort
+    @Inject(SET_FEATURE_ID_COMMAND)
+    private _setFeatureIdCommand: SetFeatureIdCommandPort
   ) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<void> {
-    return this._setsStateFeatureIdContext.setFeatureId({
+    return this._setFeatureIdCommand.setFeatureId({
       selectedFeatureId: route.params['featureId'],
     });
   }
