@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatButtonModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   declarations: [EditFeatureComponent],
   providers: [],

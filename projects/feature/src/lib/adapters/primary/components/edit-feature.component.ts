@@ -5,17 +5,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, Observable, switchMap } from 'rxjs';
-import { FeatureIdContext } from '../../../application/ports/secondary/context/feature-id.context';
+import { Observable } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 import {
   SELECTS_FEATURE_ID_CONTEXT,
   SelectsFeatureIdContextPort,
 } from '../../../application/ports/secondary/context/selects-feature-id.context-port';
-import { FeatureDTO } from '../../../application/ports/secondary/dto/feature.dto';
 import {
-  GetsOneFeatureDtoPort,
   GETS_ONE_FEATURE_DTO,
+  GetsOneFeatureDtoPort,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
+import {
+  SETS_FEATURE_DTO,
+  SetsFeatureDtoPort,
+} from '../../../application/ports/secondary/dto/sets-feature.dto-port';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-edit-feature',
@@ -47,6 +51,19 @@ export class EditFeatureComponent {
     @Inject(SELECTS_FEATURE_ID_CONTEXT)
     private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
     @Inject(GETS_ONE_FEATURE_DTO)
-    private _getsOneFeatureDto: GetsOneFeatureDtoPort
+    private _getsOneFeatureDto: GetsOneFeatureDtoPort,
+    @Inject(SETS_FEATURE_DTO) private _setsFeatureDto: SetsFeatureDtoPort,
+    private router: Router
   ) {}
+
+  onEditFeatureFormSubmited(editFeatureForm: FormGroup): void {
+    this._setsFeatureDto
+      .set({
+        id: editFeatureForm.get('id')?.value,
+        title: editFeatureForm.get('title')?.value,
+        type: editFeatureForm.get('type')?.value,
+        description: editFeatureForm.get('description')?.value,
+      })
+      .subscribe(() => this.router.navigate(['/']));
+  }
 }
