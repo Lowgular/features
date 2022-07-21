@@ -7,11 +7,11 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
-import { CreateFeatureCommand } from '../../../application/ports/primary/command/add-feature.command';
+import { CreateFeatureCommand } from '../../../application/ports/primary/command/create-feature.command';
 import {
   CREATE_FEATURE_COMMAND,
   CreateFeatureCommandPort,
-} from '../../../application/ports/primary/command/add-feature.command-port';
+} from '../../../application/ports/primary/command/create-feature.command-port';
 
 @Component({
   selector: 'lib-create-feature',

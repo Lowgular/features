@@ -22,8 +22,8 @@ import {
 import { LoadFeaturesCommand } from '../ports/primary/command/load-features.command';
 import { FeatureListQuery } from '../ports/primary/query/feature-list.query';
 import { FeatureContext } from '../ports/secondary/context/feature.context';
-import { CreateFeatureCommandPort } from '../ports/primary/command/add-feature.command-port';
-import { CreateFeatureCommand } from '../ports/primary/command/add-feature.command';
+import { CreateFeatureCommandPort } from '../ports/primary/command/create-feature.command-port';
+import { CreateFeatureCommand } from '../ports/primary/command/create-feature.command';
 import { mapFromFeatureContext } from './feature-list-query.mapper';
 
 @Injectable()
