@@ -5,8 +5,10 @@ import {
   EditFeatureComponentModule,
   FeatureIdResolver,
   FeatureIdResolverModule,
+  FeaturesStateModule,
   FirebaseFeaturesServiceModule,
   InMemoryFeatureIdStorageModule,
+  InMemoryFeaturesStorageModule,
 } from '@feature';
 import { EditFeaturePage } from './edit-feature.page';
 
@@ -24,6 +26,8 @@ import { EditFeaturePage } from './edit-feature.page';
     FeatureIdResolverModule,
     InMemoryFeatureIdStorageModule,
     FirebaseFeaturesServiceModule,
+    FeaturesStateModule,
+    InMemoryFeaturesStorageModule,
   ],
   declarations: [EditFeaturePage],
   providers: [],

@@ -15,11 +15,12 @@ import {
   GETS_ONE_FEATURE_DTO,
   GetsOneFeatureDtoPort,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
-import {
-  SETS_FEATURE_DTO,
-  SetsFeatureDtoPort,
-} from '../../../application/ports/secondary/dto/sets-feature.dto-port';
 import { Router } from '@angular/router';
+import {
+  EditFeatureCommandPort,
+  EDIT_FEATURE_COMMAND,
+} from '../../../application/ports/primary/command/edit-feature.command-port';
+import { EditFeatureCommand } from '../../../application/ports/primary/command/edit-feature.command';
 
 @Component({
   selector: 'lib-edit-feature',
@@ -52,18 +53,25 @@ export class EditFeatureComponent {
     private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
     @Inject(GETS_ONE_FEATURE_DTO)
     private _getsOneFeatureDto: GetsOneFeatureDtoPort,
-    @Inject(SETS_FEATURE_DTO) private _setsFeatureDto: SetsFeatureDtoPort,
+    @Inject(EDIT_FEATURE_COMMAND)
+    private _editFeatureCommand: EditFeatureCommandPort,
     private router: Router
   ) {}
 
   onEditFeatureFormSubmited(editFeatureForm: FormGroup): void {
-    this._setsFeatureDto
-      .set({
-        id: editFeatureForm.get('id')?.value,
-        title: editFeatureForm.get('title')?.value,
-        type: editFeatureForm.get('type')?.value,
-        description: editFeatureForm.get('description')?.value,
-      })
+    if (editFeatureForm.invalid) {
+      return;
+    }
+    this._editFeatureCommand
+      .editFeature(
+        new EditFeatureCommand(
+          editFeatureForm.get('id')?.value,
+          editFeatureForm.get('title')?.value,
+          editFeatureForm.get('type')?.value,
+          editFeatureForm.get('description')?.value
+        )
+      )
+      .pipe(take(1))
       .subscribe(() => this.router.navigate(['/']));
   }
 }

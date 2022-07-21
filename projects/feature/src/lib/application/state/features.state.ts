@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
+import { CreateFeatureCommandPort } from '../ports/primary/command/create-feature.command-port';
 import { LoadFeaturesCommandPort } from '../ports/primary/command/load-features.command-port';
 import { GetsCurrentFeatureListQueryPort } from '../ports/primary/query/gets-current-feature-list.query-port';
+import { EditFeatureCommandPort } from '../ports/primary/command/edit-feature.command-port';
 import {
   ADDS_FEATURE_DTO,
   AddsFeatureDtoPort,
@@ -19,11 +21,14 @@ import {
   GETS_ALL_FEATURE_DTO,
   GetsAllFeatureDtoPort,
 } from '../ports/secondary/dto/gets-all-feature.dto-port';
+import {
+  SETS_FEATURE_DTO,
+  SetsFeatureDtoPort,
+} from '../ports/secondary/dto/sets-feature.dto-port';
 import { LoadFeaturesCommand } from '../ports/primary/command/load-features.command';
-import { FeatureListQuery } from '../ports/primary/query/feature-list.query';
-import { FeatureContext } from '../ports/secondary/context/feature.context';
-import { CreateFeatureCommandPort } from '../ports/primary/command/create-feature.command-port';
 import { CreateFeatureCommand } from '../ports/primary/command/create-feature.command';
+import { FeatureListQuery } from '../ports/primary/query/feature-list.query';
+import { EditFeatureCommand } from '../ports/primary/command/edit-feature.command';
 import { mapFromFeatureContext } from './feature-list-query.mapper';
 
 @Injectable()
@@ -31,7 +36,8 @@ export class FeaturesState
   implements
     CreateFeatureCommandPort,
     LoadFeaturesCommandPort,
-    GetsCurrentFeatureListQueryPort
+    GetsCurrentFeatureListQueryPort,
+    EditFeatureCommandPort
 {
   constructor(
     @Inject(ADDS_FEATURE_DTO) private _addsFeatureDto: AddsFeatureDtoPort,
@@ -40,7 +46,8 @@ export class FeaturesState
     @Inject(SETS_STATE_FEATURE_CONTEXT)
     private _setsStateFeatureContext: SetsStateFeatureContextPort,
     @Inject(GETS_ALL_FEATURE_DTO)
-    private _getsAllFeatureDto: GetsAllFeatureDtoPort
+    private _getsAllFeatureDto: GetsAllFeatureDtoPort,
+    @Inject(SETS_FEATURE_DTO) private _setsFeatureDto: SetsFeatureDtoPort
   ) {}
 
   loadFeatures(command: LoadFeaturesCommand): Observable<void> {
@@ -79,5 +86,14 @@ export class FeaturesState
     return this._selectsFeatureContext
       .select()
       .pipe(map((context) => mapFromFeatureContext(context)));
+  }
+
+  editFeature(command: EditFeatureCommand): Observable<void> {
+    return this._setsFeatureDto.set({
+      id: command.id,
+      title: command.title,
+      description: command.description,
+      type: command.type,
+    });
   }
 }
