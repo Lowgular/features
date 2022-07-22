@@ -21,6 +21,10 @@ import {
   GetsCurrentSelectedFeatureIdQueryPort,
   GETS_CURRENT_SELECTED_FEATURE_ID_QUERY,
 } from '../../../application/ports/primary/query/gets-current-selected-feature-id.query-port';
+import {
+  GetsCurrentSelectedFeatureEditionQueryPort,
+  GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY,
+} from '../../../application/ports/primary/query/gets-current-selected-feature-edition.query-port';
 
 @Component({
   selector: 'lib-edit-feature',
@@ -33,7 +37,11 @@ export class EditFeatureComponent {
     this._getsCurrentSelectedFeatureIdQuery
       .getCurrentSelectedFeatureIdQuery()
       .pipe(
-        switchMap((query) => this._getsOneFeatureDto.getOne(query.selectedId)),
+        switchMap((query) =>
+          this._getsCurrentSelectedFeatureEditionQuery.getCurrentSelectedFeatureEditionQuery(
+            query.selectedId
+          )
+        ),
         map((feature) => {
           return new FormGroup({
             title: new FormControl(feature.title, Validators.required),
@@ -48,12 +56,12 @@ export class EditFeatureComponent {
       );
 
   constructor(
-    @Inject(GETS_ONE_FEATURE_DTO)
-    private _getsOneFeatureDto: GetsOneFeatureDtoPort,
     @Inject(EDIT_FEATURE_COMMAND)
     private _editFeatureCommand: EditFeatureCommandPort,
     @Inject(GETS_CURRENT_SELECTED_FEATURE_ID_QUERY)
     private _getsCurrentSelectedFeatureIdQuery: GetsCurrentSelectedFeatureIdQueryPort,
+    @Inject(GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY)
+    private _getsCurrentSelectedFeatureEditionQuery: GetsCurrentSelectedFeatureEditionQueryPort,
     private router: Router
   ) {}
 

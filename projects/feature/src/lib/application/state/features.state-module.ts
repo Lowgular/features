@@ -6,6 +6,7 @@ import { GETS_CURRENT_FEATURE_LIST_QUERY } from '../ports/primary/query/gets-cur
 import { EDIT_FEATURE_COMMAND } from '../ports/primary/command/edit-feature.command-port';
 import { SET_FEATURE_ID_COMMAND } from '../ports/primary/command/set-feature-id.command-port';
 import { GETS_CURRENT_SELECTED_FEATURE_ID_QUERY } from '../ports/primary/query/gets-current-selected-feature-id.query-port';
+import { GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY } from '../ports/primary/query/gets-current-selected-feature-edition.query-port';
 
 @NgModule({
   imports: [],
@@ -17,7 +18,8 @@ import { GETS_CURRENT_SELECTED_FEATURE_ID_QUERY } from '../ports/primary/query/g
     { provide: GETS_CURRENT_FEATURE_LIST_QUERY, useExisting: FeaturesState },
     { provide: EDIT_FEATURE_COMMAND, useExisting: FeaturesState },
     { provide: SET_FEATURE_ID_COMMAND, useExisting: FeaturesState },
-    { provide: GETS_CURRENT_SELECTED_FEATURE_ID_QUERY, useExisting: FeaturesState }
+    { provide: GETS_CURRENT_SELECTED_FEATURE_ID_QUERY, useExisting: FeaturesState },
+    { provide: GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY, useExisting: FeaturesState }
   ],
   exports: [],
 })
