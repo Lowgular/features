@@ -49,6 +49,7 @@ import { SelectedFeatureIdQuery } from '../ports/primary/query/selected-feature-
 import { FeatureIdContext } from '../ports/secondary/context/feature-id.context';
 import { SelectedFeatureEditionQuery } from '../ports/primary/query/selected-feature-edition.query';
 import { FeatureDTO } from '../ports/secondary/dto/feature.dto';
+
 import { mapFromFeatureContext } from './feature-list-query.mapper';
 
 @Injectable()
@@ -77,6 +78,7 @@ export class FeaturesState
     private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
     @Inject(GETS_ONE_FEATURE_DTO)
     private _getsOneFeatureDto: GetsOneFeatureDtoPort
+
   ) {}
 
   loadFeatures(command: LoadFeaturesCommand): Observable<void> {
@@ -162,4 +164,5 @@ export class FeaturesState
         )
       );
   }
+
 }

@@ -8,15 +8,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import {
-  GETS_ONE_FEATURE_DTO,
-  GetsOneFeatureDtoPort,
-} from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
+
 import { Router } from '@angular/router';
 import {
   EditFeatureCommandPort,
   EDIT_FEATURE_COMMAND,
 } from '../../../application/ports/primary/command/edit-feature.command-port';
 import { EditFeatureCommand } from '../../../application/ports/primary/command/edit-feature.command';
+
 import {
   GetsCurrentSelectedFeatureIdQueryPort,
   GETS_CURRENT_SELECTED_FEATURE_ID_QUERY,
@@ -26,6 +25,7 @@ import {
   GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY,
 } from '../../../application/ports/primary/query/gets-current-selected-feature-edition.query-port';
 
+
 @Component({
   selector: 'lib-edit-feature',
   templateUrl: './edit-feature.component.html',
@@ -33,6 +33,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditFeatureComponent {
+
   editFeatureForm$: Observable<FormGroup> =
     this._getsCurrentSelectedFeatureIdQuery
       .getCurrentSelectedFeatureIdQuery()
@@ -62,10 +63,12 @@ export class EditFeatureComponent {
     private _getsCurrentSelectedFeatureIdQuery: GetsCurrentSelectedFeatureIdQueryPort,
     @Inject(GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY)
     private _getsCurrentSelectedFeatureEditionQuery: GetsCurrentSelectedFeatureEditionQueryPort,
+
     private router: Router
   ) {}
 
   onEditFeatureFormSubmited(editFeatureForm: FormGroup): void {
+
     if (editFeatureForm.invalid) {
       return;
     }
@@ -79,10 +82,12 @@ export class EditFeatureComponent {
         )
       )
       .pipe(take(1))
+
       .subscribe(() =>
         this.router.navigate(['/']).then(() => {
           window.location.reload();
         })
       );
+
   }
 }

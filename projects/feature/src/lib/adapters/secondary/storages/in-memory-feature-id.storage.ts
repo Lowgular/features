@@ -5,6 +5,7 @@ import { SetsStateFeatureIdContextPort } from '../../../application/ports/second
 import { SelectsFeatureIdContextPort } from '../../../application/ports/secondary/context/selects-feature-id.context-port';
 import { FeatureIdContext } from '../../../application/ports/secondary/context/feature-id.context';
 
+
 @Injectable()
 export class InMemoryFeatureIdStorage
   implements SetsStateFeatureIdContextPort, SelectsFeatureIdContextPort
@@ -13,10 +14,12 @@ export class InMemoryFeatureIdStorage
     Partial<FeatureIdContext>
   >({});
 
+
   setFeatureId(selectedFeatureId: string): Observable<void> {
     return of(this._subject.next({ selectedFeatureId })).pipe(
       map(() => void 0)
     );
+
   }
 
   select(): Observable<Partial<FeatureIdContext>> {

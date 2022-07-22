@@ -3,6 +3,7 @@
     *ngFor="let feature of list.items"
     class="flex flex-col bg-indigo-50 w-[50rem] p-5 rounded-md my-3"
   >
+
     <div class="flex justify-between">
       <div class="flex justify-between w-10/12">
         <p class="text-lg font-semibold">{{ feature.title }}</p>
@@ -17,5 +18,6 @@
       <p class="text-pink-500 font-medium">{{ feature.type }}</p>
     </div>
     <p>{{ feature.description }}</p>
+
   </li>
 </ul>
