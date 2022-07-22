@@ -108,7 +108,7 @@ export class FeaturesState
 
   setFeatureId(command: SetFeatureIdCommand): Observable<void> {
     return this._setsStateFeatureIdContext.setFeatureId(
-      new SetFeatureIdCommand(command.selectedFeatureId)
+      command.selectedFeatureId
     );
   }
 }
