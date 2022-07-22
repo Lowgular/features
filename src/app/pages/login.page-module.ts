@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LoginComponentModule } from '@user-auth';
 import { LoginPage } from './login.page';
 
 @NgModule({ imports: [CommonModule, 
@@ -9,7 +10,9 @@ import { LoginPage } from './login.page';
           path: '',
           component: LoginPage,
         }
-      ])],
+      ]),
+  LoginComponentModule
+],
   	declarations: [LoginPage],
   	providers: [],
   	exports: [] })

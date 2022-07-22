@@ -1,0 +1,23 @@
+<form [formGroup]="login" class="flex flex-col items-center">
+  <div
+    class="flex flex-col items-center bg-indigo-50 w-fit p-10 rounded-md mb-5"
+  >
+    <mat-form-field class="w-96">
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field class="w-96">
+      <mat-label>Licence Key</mat-label>
+      <input matInput formControlName="licenceKey" />
+    </mat-form-field>
+  </div>
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    class="w-min my-5 text-lg"
+  >
+    LOG IN
+  </button>
+</form>
