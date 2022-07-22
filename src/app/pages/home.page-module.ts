@@ -13,6 +13,7 @@ import {
 import { HomePage } from './home.page';
 import { MatButtonModule } from '@angular/material/button';
 import { NewFeaturePage } from './new-feature.page';
+import { EditFeaturePage } from './edit-feature.page';
 
 @NgModule({
   imports: [
