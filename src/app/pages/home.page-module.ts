@@ -3,9 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   CreateFeatureComponentModule,
+  EditFeatureComponentModule,
+  FeatureIdResolver,
+  FeatureIdResolverModule,
   FeatureListComponentModule,
   FeaturesStateModule,
   FirebaseFeaturesServiceModule,
+  InMemoryFeatureIdStorageModule,
   InMemoryFeaturesStorageModule,
   LoadFeaturesResolver,
   LoadFeaturesResolverModule,
@@ -29,6 +33,11 @@ import { EditFeaturePage } from './edit-feature.page';
         path: 'new-feature',
         component: NewFeaturePage,
       },
+      {
+        path: 'edit-feature/:featureId',
+        resolve: [FeatureIdResolver],
+        component: EditFeaturePage,
+      },
     ]),
     CreateFeatureComponentModule,
     LoadFeaturesResolverModule,
@@ -36,8 +45,11 @@ import { EditFeaturePage } from './edit-feature.page';
     FirebaseFeaturesServiceModule,
     InMemoryFeaturesStorageModule,
     FeatureListComponentModule,
+    InMemoryFeatureIdStorageModule,
+    EditFeatureComponentModule,
+    FeatureIdResolverModule,
   ],
-  declarations: [HomePage, NewFeaturePage],
+  declarations: [HomePage, NewFeaturePage, EditFeaturePage],
   providers: [],
   exports: [],
 })

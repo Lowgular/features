@@ -14,8 +14,12 @@ export class InMemoryFeatureIdStorage
     Partial<FeatureIdContext>
   >({});
 
-  setFeatureId(command: SetFeatureIdCommand): Observable<void> {
-    return of(this._subject.next(command)).pipe(map(() => void 0));
+
+  setFeatureId(selectedFeatureId: string): Observable<void> {
+    return of(this._subject.next({ selectedFeatureId })).pipe(
+      map(() => void 0)
+    );
+
   }
 
   select(): Observable<Partial<FeatureIdContext>> {
