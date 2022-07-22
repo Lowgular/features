@@ -79,6 +79,10 @@ export class EditFeatureComponent {
         )
       )
       .pipe(take(1))
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() =>
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        })
+      );
   }
 }
