@@ -14,10 +14,12 @@ export class InMemoryFeatureIdStorage
     Partial<FeatureIdContext>
   >({});
 
+
   setFeatureId(selectedFeatureId: string): Observable<void> {
     return of(this._subject.next({ selectedFeatureId })).pipe(
       map(() => void 0)
     );
+
   }
 
   select(): Observable<Partial<FeatureIdContext>> {

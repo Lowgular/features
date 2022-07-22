@@ -15,12 +15,14 @@ import {
   GETS_ONE_FEATURE_DTO,
   GetsOneFeatureDtoPort,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
+
 import { Router } from '@angular/router';
 import {
   EditFeatureCommandPort,
   EDIT_FEATURE_COMMAND,
 } from '../../../application/ports/primary/command/edit-feature.command-port';
 import { EditFeatureCommand } from '../../../application/ports/primary/command/edit-feature.command';
+
 
 @Component({
   selector: 'lib-edit-feature',
@@ -53,12 +55,15 @@ export class EditFeatureComponent {
     private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
     @Inject(GETS_ONE_FEATURE_DTO)
     private _getsOneFeatureDto: GetsOneFeatureDtoPort,
+
     @Inject(EDIT_FEATURE_COMMAND)
     private _editFeatureCommand: EditFeatureCommandPort,
+
     private router: Router
   ) {}
 
   onEditFeatureFormSubmited(editFeatureForm: FormGroup): void {
+
     if (editFeatureForm.invalid) {
       return;
     }
@@ -72,6 +77,7 @@ export class EditFeatureComponent {
         )
       )
       .pipe(take(1))
+
       .subscribe(() => this.router.navigate(['/']));
   }
 }
