@@ -13,7 +13,14 @@
 
     <mat-form-field class="w-96">
       <mat-label>Licence Key</mat-label>
-      <input matInput formControlName="licenceKey" />
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        formControlName="licenceKey"
+      />
+      <mat-icon matSuffix (click)="hide = !hide">{{
+        hide ? "visibility_off" : "visibility"
+      }}</mat-icon>
     </mat-form-field>
   </div>
   <button

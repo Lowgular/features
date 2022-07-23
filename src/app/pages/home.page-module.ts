@@ -33,10 +33,12 @@ import { AuthGuard, AuthGuardModule } from '@user-auth';
       },
       {
         path: 'new-feature',
+        canActivate: [AuthGuard],
         component: NewFeaturePage,
       },
       {
         path: 'edit-feature/:featureId',
+        canActivate: [AuthGuard],
         resolve: [FeatureIdResolver],
         component: EditFeaturePage,
       },

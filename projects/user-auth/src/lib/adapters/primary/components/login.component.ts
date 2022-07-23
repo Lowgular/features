@@ -32,6 +32,7 @@ export class LoginComponent {
     email: new FormControl('', Validators.required),
     licenceKey: new FormControl('', Validators.required),
   });
+  hide = true;
 
   constructor(
     @Inject(ADDS_CREDENTIALS_DTO)
