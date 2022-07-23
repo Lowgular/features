@@ -18,6 +18,7 @@ import { HomePage } from './home.page';
 import { MatButtonModule } from '@angular/material/button';
 import { NewFeaturePage } from './new-feature.page';
 import { EditFeaturePage } from './edit-feature.page';
+import { AuthGuard, AuthGuardModule } from '@user-auth';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { EditFeaturePage } from './edit-feature.page';
     RouterModule.forChild([
       {
         path: '',
+        canActivate: [AuthGuard],
         resolve: [LoadFeaturesResolver],
         component: HomePage,
       },
@@ -48,6 +50,7 @@ import { EditFeaturePage } from './edit-feature.page';
     InMemoryFeatureIdStorageModule,
     EditFeatureComponentModule,
     FeatureIdResolverModule,
+    AuthGuardModule,
   ],
   declarations: [HomePage, NewFeaturePage, EditFeaturePage],
   providers: [],
