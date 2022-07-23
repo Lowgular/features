@@ -6,6 +6,8 @@ import { LoadFeaturesCommandPort } from '../ports/primary/command/load-features.
 import { GetsCurrentFeatureListQueryPort } from '../ports/primary/query/gets-current-feature-list.query-port';
 import { EditFeatureCommandPort } from '../ports/primary/command/edit-feature.command-port';
 import { SetFeatureIdCommandPort } from '../ports/primary/command/set-feature-id.command-port';
+import { GetsCurrentSelectedFeatureIdQueryPort } from '../ports/primary/query/gets-current-selected-feature-id.query-port';
+import { GetsCurrentSelectedFeatureEditionQueryPort } from '../ports/primary/query/gets-current-selected-feature-edition.query-port';
 import {
   ADDS_FEATURE_DTO,
   AddsFeatureDtoPort,
@@ -30,11 +32,24 @@ import {
   SETS_STATE_FEATURE_ID_CONTEXT,
   SetsStateFeatureIdContextPort,
 } from '../ports/secondary/context/sets-state-feature-id.context-port';
+import {
+  SELECTS_FEATURE_ID_CONTEXT,
+  SelectsFeatureIdContextPort,
+} from '../ports/secondary/context/selects-feature-id.context-port';
+import {
+  GETS_ONE_FEATURE_DTO,
+  GetsOneFeatureDtoPort,
+} from '../ports/secondary/dto/gets-one-feature.dto-port';
 import { LoadFeaturesCommand } from '../ports/primary/command/load-features.command';
 import { CreateFeatureCommand } from '../ports/primary/command/create-feature.command';
 import { FeatureListQuery } from '../ports/primary/query/feature-list.query';
 import { EditFeatureCommand } from '../ports/primary/command/edit-feature.command';
 import { SetFeatureIdCommand } from '../ports/primary/command/set-feature-id.command';
+import { SelectedFeatureIdQuery } from '../ports/primary/query/selected-feature-id.query';
+import { FeatureIdContext } from '../ports/secondary/context/feature-id.context';
+import { SelectedFeatureEditionQuery } from '../ports/primary/query/selected-feature-edition.query';
+import { FeatureDTO } from '../ports/secondary/dto/feature.dto';
+
 import { mapFromFeatureContext } from './feature-list-query.mapper';
 
 @Injectable()
@@ -44,7 +59,9 @@ export class FeaturesState
     LoadFeaturesCommandPort,
     GetsCurrentFeatureListQueryPort,
     EditFeatureCommandPort,
-    SetFeatureIdCommandPort
+    SetFeatureIdCommandPort,
+    GetsCurrentSelectedFeatureIdQueryPort,
+    GetsCurrentSelectedFeatureEditionQueryPort
 {
   constructor(
     @Inject(ADDS_FEATURE_DTO) private _addsFeatureDto: AddsFeatureDtoPort,
@@ -56,7 +73,12 @@ export class FeaturesState
     private _getsAllFeatureDto: GetsAllFeatureDtoPort,
     @Inject(SETS_FEATURE_DTO) private _setsFeatureDto: SetsFeatureDtoPort,
     @Inject(SETS_STATE_FEATURE_ID_CONTEXT)
-    private _setsStateFeatureIdContext: SetsStateFeatureIdContextPort
+    private _setsStateFeatureIdContext: SetsStateFeatureIdContextPort,
+    @Inject(SELECTS_FEATURE_ID_CONTEXT)
+    private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
+    @Inject(GETS_ONE_FEATURE_DTO)
+    private _getsOneFeatureDto: GetsOneFeatureDtoPort
+
   ) {}
 
   loadFeatures(command: LoadFeaturesCommand): Observable<void> {
@@ -111,4 +133,36 @@ export class FeaturesState
       command.selectedFeatureId
     );
   }
+
+  getCurrentSelectedFeatureIdQuery(): Observable<SelectedFeatureIdQuery> {
+    return this._selectsFeatureIdContext
+      .select()
+      .pipe(
+        map(
+          (
+            featureIdContext: Partial<FeatureIdContext>
+          ): SelectedFeatureIdQuery =>
+            new SelectedFeatureIdQuery(featureIdContext.selectedFeatureId || '')
+        )
+      );
+  }
+
+  getCurrentSelectedFeatureEditionQuery(
+    selectedFeatureId: string
+  ): Observable<SelectedFeatureEditionQuery> {
+    return this._getsOneFeatureDto
+      .getOne(selectedFeatureId)
+      .pipe(
+        map(
+          (featureDTO: FeatureDTO): SelectedFeatureEditionQuery =>
+            new SelectedFeatureEditionQuery(
+              featureDTO.id,
+              featureDTO.title,
+              featureDTO.type,
+              featureDTO.description
+            )
+        )
+      );
+  }
+
 }

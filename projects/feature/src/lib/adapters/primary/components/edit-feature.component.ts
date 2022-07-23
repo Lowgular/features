@@ -8,13 +8,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import {
-  SELECTS_FEATURE_ID_CONTEXT,
-  SelectsFeatureIdContextPort,
-} from '../../../application/ports/secondary/context/selects-feature-id.context-port';
-import {
-  GETS_ONE_FEATURE_DTO,
-  GetsOneFeatureDtoPort,
-} from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
 
 import { Router } from '@angular/router';
 import {
@@ -22,6 +15,15 @@ import {
   EDIT_FEATURE_COMMAND,
 } from '../../../application/ports/primary/command/edit-feature.command-port';
 import { EditFeatureCommand } from '../../../application/ports/primary/command/edit-feature.command';
+
+import {
+  GetsCurrentSelectedFeatureIdQueryPort,
+  GETS_CURRENT_SELECTED_FEATURE_ID_QUERY,
+} from '../../../application/ports/primary/query/gets-current-selected-feature-id.query-port';
+import {
+  GetsCurrentSelectedFeatureEditionQueryPort,
+  GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY,
+} from '../../../application/ports/primary/query/gets-current-selected-feature-edition.query-port';
 
 
 @Component({
@@ -31,33 +33,36 @@ import { EditFeatureCommand } from '../../../application/ports/primary/command/e
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditFeatureComponent {
-  editFeatureForm$: Observable<FormGroup> = this._selectsFeatureIdContext
-    .select()
-    .pipe(
-      switchMap((context) =>
-        this._getsOneFeatureDto.getOne(context.selectedFeatureId as string)
-      ),
-      map((feature) => {
-        return new FormGroup({
-          title: new FormControl(feature.title, Validators.required),
-          type: new FormControl(feature.type, Validators.required),
-          description: new FormControl(
-            feature.description,
-            Validators.required
-          ),
-          id: new FormControl(feature.id),
-        });
-      })
-    );
+
+  editFeatureForm$: Observable<FormGroup> =
+    this._getsCurrentSelectedFeatureIdQuery
+      .getCurrentSelectedFeatureIdQuery()
+      .pipe(
+        switchMap((query) =>
+          this._getsCurrentSelectedFeatureEditionQuery.getCurrentSelectedFeatureEditionQuery(
+            query.selectedId
+          )
+        ),
+        map((feature) => {
+          return new FormGroup({
+            title: new FormControl(feature.title, Validators.required),
+            type: new FormControl(feature.type, Validators.required),
+            description: new FormControl(
+              feature.description,
+              Validators.required
+            ),
+            id: new FormControl(feature.id),
+          });
+        })
+      );
 
   constructor(
-    @Inject(SELECTS_FEATURE_ID_CONTEXT)
-    private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
-    @Inject(GETS_ONE_FEATURE_DTO)
-    private _getsOneFeatureDto: GetsOneFeatureDtoPort,
-
     @Inject(EDIT_FEATURE_COMMAND)
     private _editFeatureCommand: EditFeatureCommandPort,
+    @Inject(GETS_CURRENT_SELECTED_FEATURE_ID_QUERY)
+    private _getsCurrentSelectedFeatureIdQuery: GetsCurrentSelectedFeatureIdQueryPort,
+    @Inject(GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY)
+    private _getsCurrentSelectedFeatureEditionQuery: GetsCurrentSelectedFeatureEditionQueryPort,
 
     private router: Router
   ) {}
@@ -78,6 +83,11 @@ export class EditFeatureComponent {
       )
       .pipe(take(1))
 
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() =>
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        })
+      );
+
   }
 }

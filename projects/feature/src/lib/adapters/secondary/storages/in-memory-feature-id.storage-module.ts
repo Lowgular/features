@@ -9,6 +9,7 @@ import { SELECTS_FEATURE_ID_CONTEXT } from '../../../application/ports/secondary
   declarations: [],
   providers: [
     InMemoryFeatureIdStorage,
+
     {
       provide: SETS_STATE_FEATURE_ID_CONTEXT,
       useExisting: InMemoryFeatureIdStorage,

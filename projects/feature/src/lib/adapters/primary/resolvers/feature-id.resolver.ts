@@ -6,7 +6,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
-
   SetFeatureIdCommandPort,
   SET_FEATURE_ID_COMMAND,
 } from '../../../application/ports/primary/command/set-feature-id.command-port';
@@ -15,7 +14,6 @@ import {
 @Injectable()
 export class FeatureIdResolver implements Resolve<void> {
   constructor(
-
     @Inject(SET_FEATURE_ID_COMMAND)
     private _setFeatureIdCommand: SetFeatureIdCommandPort
 
