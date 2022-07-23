@@ -33,16 +33,11 @@ export class LoginComponent {
     licenceKey: new FormControl('', Validators.required),
   });
 
-  context$: Observable<Partial<CurrentUserContext>> =
-    this._selectsCurrentUserContext.select();
-
   constructor(
     @Inject(ADDS_CREDENTIALS_DTO)
     private _addsCredentialsDto: AddsCredentialsDtoPort,
     @Inject(SETS_STATE_CURRENT_USER_CONTEXT)
     private _setsStateCurrentUserContext: SetsStateCurrentUserContextPort,
-    @Inject(SELECTS_CURRENT_USER_CONTEXT)
-    private _selectsCurrentUserContext: SelectsCurrentUserContextPort,
     private _router: Router
   ) {}
 
@@ -53,14 +48,13 @@ export class LoginComponent {
         password: login.get('licenceKey')?.value,
       })
       .pipe(
-        tap(console.log),
-        switchMap((data) =>
-          this._setsStateCurrentUserContext.setState({ id: data.id })
+        tap((data) => localStorage.setItem('accessToken', data.accessToken)),
+        switchMap((response) =>
+          this._setsStateCurrentUserContext.setState({ id: response.id })
         )
       )
-      .subscribe();
-    // .subscribe()() => {
-    //   this._router.navigate(['/']);
-    // });
+      .subscribe(() => {
+        this._router.navigate(['/']);
+      });
   }
 }
