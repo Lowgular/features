@@ -20,7 +20,8 @@
     "lib": ["es2020", "dom"],
     "paths": {
       "@feature": ["projects/feature/src/index.ts"],
-      "@user-auth": ["projects/user-auth/src/index.ts"]
+      "@user-auth": ["projects/user-auth/src/index.ts"],
+      "@shared": ["projects/shared/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
