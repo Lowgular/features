@@ -25,3 +25,4 @@
     LOG IN
   </button>
 </form>
+<div *ngIf="context$ | async as context">{{ context | json }}</div>

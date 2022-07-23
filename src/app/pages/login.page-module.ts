@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpAuthServiceModule, LoginComponentModule } from '@user-auth';
 import { LoginPage } from './login.page';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import { InMemoryCurrentUserStorageModule } from 'projects/shared/src/lib/adapters/secondary/storages/in-memory-current-user.storage-module';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
     LoginComponentModule,
     HttpAuthServiceModule,
     HttpClientModule,
-    BrowserModule,
+    InMemoryCurrentUserStorageModule,
   ],
   declarations: [LoginPage],
   providers: [],

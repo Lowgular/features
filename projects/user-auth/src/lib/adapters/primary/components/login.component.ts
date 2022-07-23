@@ -6,10 +6,20 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, switchMap, tap } from 'rxjs';
 import {
   ADDS_CREDENTIALS_DTO,
   AddsCredentialsDtoPort,
 } from '../../../application/ports/secondary/dto/adds-credentials.dto-port';
+import {
+  SetsStateCurrentUserContextPort,
+  SETS_STATE_CURRENT_USER_CONTEXT,
+} from 'projects/shared/src/lib/application/ports/secondary/context/sets-state-current-user.context-port';
+import {
+  SelectsCurrentUserContextPort,
+  SELECTS_CURRENT_USER_CONTEXT,
+} from 'projects/shared/src/lib/application/ports/secondary/context/selects-current-user.context-port';
+import { CurrentUserContext } from 'projects/shared/src/lib/application/ports/secondary/context/current-user.context';
 
 @Component({
   selector: 'lib-login',
@@ -23,9 +33,16 @@ export class LoginComponent {
     licenceKey: new FormControl('', Validators.required),
   });
 
+  context$: Observable<Partial<CurrentUserContext>> =
+    this._selectsCurrentUserContext.select();
+
   constructor(
     @Inject(ADDS_CREDENTIALS_DTO)
     private _addsCredentialsDto: AddsCredentialsDtoPort,
+    @Inject(SETS_STATE_CURRENT_USER_CONTEXT)
+    private _setsStateCurrentUserContext: SetsStateCurrentUserContextPort,
+    @Inject(SELECTS_CURRENT_USER_CONTEXT)
+    private _selectsCurrentUserContext: SelectsCurrentUserContextPort,
     private _router: Router
   ) {}
 
@@ -35,8 +52,15 @@ export class LoginComponent {
         email: login.get('email')?.value,
         password: login.get('licenceKey')?.value,
       })
-      .subscribe(() => {
-        this._router.navigate(['/']);
-      });
+      .pipe(
+        tap(console.log),
+        switchMap((data) =>
+          this._setsStateCurrentUserContext.setState({ id: data.id })
+        )
+      )
+      .subscribe();
+    // .subscribe()() => {
+    //   this._router.navigate(['/']);
+    // });
   }
 }
