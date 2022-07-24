@@ -18,7 +18,6 @@ import { InMemoryCurrentUserStorageModule } from 'projects/shared/src/lib/adapte
     LoginComponentModule,
     HttpAuthServiceModule,
     HttpClientModule,
-    InMemoryCurrentUserStorageModule,
   ],
   declarations: [LoginPage],
   providers: [],

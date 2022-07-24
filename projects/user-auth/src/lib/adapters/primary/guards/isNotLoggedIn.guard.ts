@@ -8,7 +8,7 @@ import {
 import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class IsNotLoggedInGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(

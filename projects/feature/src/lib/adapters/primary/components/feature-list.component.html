@@ -17,5 +17,10 @@
       <p class="text-pink-500 font-medium">{{ feature.type }}</p>
     </div>
     <p>{{ feature.description }}</p>
+    <p>
+      <span class="font-medium text-red-500">*creator ID: </span
+      >{{ feature.creator }}
+    </p>
   </li>
 </ul>
+<div *ngIf="userContext$ | async as userContext">{{ userContext | json }}</div>
