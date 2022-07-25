@@ -28,6 +28,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditFeatureComponent {
+
   editFeatureForm$: Observable<FormGroup> =
     this._getsCurrentSelectedFeatureIdQuery
       .getCurrentSelectedFeatureIdQuery()

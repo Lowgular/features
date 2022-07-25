@@ -18,7 +18,6 @@ export class InMemoryFeatureIdStorage
       map(() => void 0)
     );
   }
-
   select(): Observable<Partial<FeatureIdContext>> {
     return this._subject.asObservable();
   }

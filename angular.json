@@ -108,6 +108,7 @@
           }
         }
       }
+
     },
     "user-auth": {
       "projectType": "library",
@@ -140,6 +141,7 @@
           }
         }
       }
+
     }
   },
   "defaultProject": "features"
