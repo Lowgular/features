@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, switchMap, take, tap } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs';
 import {
   ADDS_CREDENTIALS_DTO,
   AddsCredentialsDtoPort,
@@ -15,11 +15,6 @@ import {
   SetsStateCurrentUserContextPort,
   SETS_STATE_CURRENT_USER_CONTEXT,
 } from 'projects/shared/src/lib/application/ports/secondary/context/sets-state-current-user.context-port';
-import {
-  SelectsCurrentUserContextPort,
-  SELECTS_CURRENT_USER_CONTEXT,
-} from 'projects/shared/src/lib/application/ports/secondary/context/selects-current-user.context-port';
-import { CurrentUserContext } from 'projects/shared/src/lib/application/ports/secondary/context/current-user.context';
 import {
   SetsStateLocalStorageContextPort,
   SETS_STATE_LOCAL_STORAGE_CONTEXT,
@@ -42,15 +37,10 @@ export class LoginComponent {
     private _addsCredentialsDto: AddsCredentialsDtoPort,
     @Inject(SETS_STATE_CURRENT_USER_CONTEXT)
     private _setsStateCurrentUserContext: SetsStateCurrentUserContextPort,
-    @Inject(SELECTS_CURRENT_USER_CONTEXT)
-    private _selectsCurrentUserContext: SelectsCurrentUserContextPort,
     @Inject(SETS_STATE_LOCAL_STORAGE_CONTEXT)
     private _setsStateLocalStorageContext: SetsStateLocalStorageContextPort,
     private _router: Router
   ) {}
-
-  userContext$: Observable<Partial<CurrentUserContext>> =
-    this._selectsCurrentUserContext.select();
 
   onLoginSubmited(login: FormGroup): void {
     this._addsCredentialsDto
