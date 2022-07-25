@@ -3,6 +3,7 @@ export class FeatureListItemQuery {
     public readonly title: string,
     public readonly description: string,
     public readonly type: string,
-    public readonly id: string
+    public readonly id: string,
+    public readonly creator: string
   ) {}
 }

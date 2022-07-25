@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { CreateFeatureCommandPort } from '../ports/primary/command/create-feature.command-port';
 import { LoadFeaturesCommandPort } from '../ports/primary/command/load-features.command-port';
 import { GetsCurrentFeatureListQueryPort } from '../ports/primary/query/gets-current-feature-list.query-port';
@@ -49,8 +49,11 @@ import { SelectedFeatureIdQuery } from '../ports/primary/query/selected-feature-
 import { FeatureIdContext } from '../ports/secondary/context/feature-id.context';
 import { SelectedFeatureEditionQuery } from '../ports/primary/query/selected-feature-edition.query';
 import { FeatureDTO } from '../ports/secondary/dto/feature.dto';
-
 import { mapFromFeatureContext } from './feature-list-query.mapper';
+import {
+  SelectsCurrentUserContextPort,
+  SELECTS_CURRENT_USER_CONTEXT,
+} from '@shared';
 
 @Injectable()
 export class FeaturesState
@@ -76,9 +79,10 @@ export class FeaturesState
     private _setsStateFeatureIdContext: SetsStateFeatureIdContextPort,
     @Inject(SELECTS_FEATURE_ID_CONTEXT)
     private _selectsFeatureIdContext: SelectsFeatureIdContextPort,
+    @Inject(SELECTS_CURRENT_USER_CONTEXT)
+    private _selectsCurrentUserContext: SelectsCurrentUserContextPort,
     @Inject(GETS_ONE_FEATURE_DTO)
     private _getsOneFeatureDto: GetsOneFeatureDtoPort
-
   ) {}
 
   loadFeatures(command: LoadFeaturesCommand): Observable<void> {
@@ -91,24 +95,16 @@ export class FeaturesState
   }
 
   createFeature(command: CreateFeatureCommand): Observable<void> {
-    return combineLatest([
-      this._addsFeatureDto.add({
-        title: command.title,
-        description: command.description,
-        type: command.type,
-        status: 'pending',
-        creator: 'test creator id',
-      }),
-      this._selectsFeatureContext.select().pipe(take(1)),
-    ]).pipe(
-      map(([newFeature, featureContext]) => {
-        return {
-          ...featureContext,
-          all: [...(featureContext.all as any[]), newFeature],
-        };
-      }),
-      switchMap((featureContext) =>
-        this._setsStateFeatureContext.setState(featureContext)
+    return this._selectsCurrentUserContext.select().pipe(
+      take(1),
+      switchMap((userContext) =>
+        this._addsFeatureDto.add({
+          title: command.title,
+          description: command.description,
+          type: command.type,
+          status: 'pending',
+          creator: userContext.id,
+        })
       )
     );
   }
@@ -120,12 +116,19 @@ export class FeaturesState
   }
 
   editFeature(command: EditFeatureCommand): Observable<void> {
-    return this._setsFeatureDto.set({
-      id: command.id,
-      title: command.title,
-      description: command.description,
-      type: command.type,
-    });
+    return this._setsFeatureDto
+      .set({
+        id: command.id,
+        title: command.title,
+        description: command.description,
+        type: command.type,
+      })
+      .pipe(
+        switchMap(() => this._getsAllFeatureDto.getAll()),
+        switchMap((features) =>
+          this._setsStateFeatureContext.setState({ all: features })
+        )
+      );
   }
 
   setFeatureId(command: SetFeatureIdCommand): Observable<void> {
@@ -164,5 +167,4 @@ export class FeaturesState
         )
       );
   }
-
 }

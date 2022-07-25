@@ -8,14 +8,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import {
-
-import { Router } from '@angular/router';
-import {
   EditFeatureCommandPort,
   EDIT_FEATURE_COMMAND,
 } from '../../../application/ports/primary/command/edit-feature.command-port';
 import { EditFeatureCommand } from '../../../application/ports/primary/command/edit-feature.command';
-
 import {
   GetsCurrentSelectedFeatureIdQueryPort,
   GETS_CURRENT_SELECTED_FEATURE_ID_QUERY,
@@ -24,7 +20,6 @@ import {
   GetsCurrentSelectedFeatureEditionQueryPort,
   GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY,
 } from '../../../application/ports/primary/query/gets-current-selected-feature-edition.query-port';
-
 
 @Component({
   selector: 'lib-edit-feature',
@@ -62,13 +57,10 @@ export class EditFeatureComponent {
     @Inject(GETS_CURRENT_SELECTED_FEATURE_ID_QUERY)
     private _getsCurrentSelectedFeatureIdQuery: GetsCurrentSelectedFeatureIdQueryPort,
     @Inject(GETS_CURRENT_SELECTED_FEATURE_EDITION_QUERY)
-    private _getsCurrentSelectedFeatureEditionQuery: GetsCurrentSelectedFeatureEditionQueryPort,
-
-    private router: Router
+    private _getsCurrentSelectedFeatureEditionQuery: GetsCurrentSelectedFeatureEditionQueryPort
   ) {}
 
   onEditFeatureFormSubmited(editFeatureForm: FormGroup): void {
-
     if (editFeatureForm.invalid) {
       return;
     }
@@ -82,12 +74,6 @@ export class EditFeatureComponent {
         )
       )
       .pipe(take(1))
-
-      .subscribe(() =>
-        this.router.navigate(['/']).then(() => {
-          window.location.reload();
-        })
-      );
-
+      .subscribe();
   }
 }

@@ -12,7 +12,8 @@ export const mapFromFeatureContext = (
           feature.title,
           feature.description,
           feature.type,
-          feature.id
+          feature.id,
+          feature.creator
         )
     )
   );

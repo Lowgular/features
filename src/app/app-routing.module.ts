@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsNotLoggedInGuard, IsNotLoggedInGuardModule } from '@user-auth';
 import { HomePageModule } from './pages/home.page-module';
-import { EditFeaturePageModule } from './pages/edit-feature.page-module';
+import { LoginPageModule } from './pages/login.page-module';
 
 const routes: Routes = [
   {
     path: '',
+    canActivate: [IsNotLoggedInGuard],
     loadChildren: () => HomePageModule,
   },
-  { 
-        path: 'edit-feature/:featureId', 
-        loadChildren: () => EditFeaturePageModule
-      }
+  {
+    path: 'login',
+    loadChildren: () => LoginPageModule,
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), IsNotLoggedInGuardModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

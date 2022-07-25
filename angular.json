@@ -90,9 +90,7 @@
             "scripts": []
           }
         },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
-        }
+        "deploy": { "builder": "angular-cli-ghpages:deploy" }
       }
     },
     "feature": {
@@ -110,6 +108,40 @@
           }
         }
       }
+
+    },
+    "user-auth": {
+      "projectType": "library",
+      "root": "projects/user-auth",
+      "sourceRoot": "projects/user-auth/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/user-auth"],
+          "options": {
+            "jestConfig": "projects/user-auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared": {
+      "projectType": "library",
+      "root": "projects/shared",
+      "sourceRoot": "projects/shared/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/shared"],
+          "options": {
+            "jestConfig": "projects/shared/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+
     }
   },
   "defaultProject": "features"
