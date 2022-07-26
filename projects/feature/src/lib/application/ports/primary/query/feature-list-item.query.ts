@@ -8,6 +8,6 @@ export class FeatureListItemQuery {
     public readonly creator: string,
     private readonly _voters: string[]
   ) {
-    this.voters = this._voters.length;
+    this.voters = [...new Set(this._voters)].length;
   }
 }
