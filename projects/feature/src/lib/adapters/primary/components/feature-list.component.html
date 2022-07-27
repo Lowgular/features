@@ -6,27 +6,17 @@
   >
     <div class="flex justify-center items-center w-1/12 mt-2">
       <div (click)="onVotingIconClicked(feature)">
-        <div *ngIf="liked; else template">
-          <button
-            mat-icon-button
-            color="accent"
-            (click)="toggleVotingIcon()"
-            matBadge="{{ feature.voters }}"
-          >
-            <mat-icon class="icon-display">favorite</mat-icon>
-          </button>
-        </div>
-        <ng-template #template>
-          <button
-            mat-icon-button
-            (click)="toggleVotingIcon()"
-            matBadge="{{ feature.voters }}"
-          >
-            <mat-icon class="icon-display">favorite_border</mat-icon>
-          </button></ng-template
+        <button
+          mat-icon-button
+          color="accent"
+          (click)="toggleVotingIcon()"
+          [matBadge]="feature.voters"
         >
+          <mat-icon class="scale-150">favorite</mat-icon>
+        </button>
       </div>
     </div>
+
     <div class="flex flex-col ml-5 w-11/12">
       <div class="flex justify-between">
         <div class="flex justify-between w-10/12">
@@ -45,5 +35,3 @@
     </div>
   </li>
 </ul>
-<!-- {{ votingContext | json }}
-</div> -->
