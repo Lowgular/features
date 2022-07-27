@@ -5,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map, Observable} from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   SelectsLocalStorageContextPort,
   SELECTS_LOCAL_STORAGE_CONTEXT,

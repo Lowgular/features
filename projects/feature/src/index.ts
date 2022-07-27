@@ -9,3 +9,4 @@ export * from './lib/adapters/primary/components/edit-feature.component-module';
 export * from './lib/adapters/primary/resolvers/feature-id.resolver';
 export * from './lib/adapters/primary/resolvers/feature-id.resolver-module';
 export * from './lib/adapters/secondary/storages/in-memory-feature-id.storage-module';
+export * from './lib/adapters/secondary/storages/in-memory-voting.storage-module';

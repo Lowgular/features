@@ -11,6 +11,7 @@ import {
   FirebaseFeaturesServiceModule,
   InMemoryFeatureIdStorageModule,
   InMemoryFeaturesStorageModule,
+  InMemoryVotingStorageModule,
   LoadFeaturesResolver,
   LoadFeaturesResolverModule,
 } from '@feature';
@@ -48,6 +49,7 @@ import { EditFeaturePage } from './edit-feature.page';
     InMemoryFeatureIdStorageModule,
     EditFeatureComponentModule,
     FeatureIdResolverModule,
+    InMemoryVotingStorageModule,
   ],
   declarations: [HomePage, NewFeaturePage, EditFeaturePage],
   providers: [],

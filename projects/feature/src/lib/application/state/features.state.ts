@@ -104,6 +104,7 @@ export class FeaturesState
           type: command.type,
           status: 'pending',
           creator: userContext.id,
+          voters: [],
         })
       )
     );
