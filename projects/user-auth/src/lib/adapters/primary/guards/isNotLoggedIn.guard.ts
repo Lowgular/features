@@ -5,25 +5,25 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { map, Observable } from 'rxjs';
 import {
-  SelectsLocalStorageContextPort,
-  SELECTS_LOCAL_STORAGE_CONTEXT,
-} from '../../../application/ports/secondary/context/selects-local-storage.context-port';
+  SelectsCurrentUserContextPort,
+  SELECTS_CURRENT_USER_CONTEXT,
+} from '@shared';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class IsNotLoggedInGuard implements CanActivate {
   constructor(
     private router: Router,
-    @Inject(SELECTS_LOCAL_STORAGE_CONTEXT)
-    private _selectsLocalStorageContext: SelectsLocalStorageContextPort
+    @Inject(SELECTS_CURRENT_USER_CONTEXT)
+    private _selectsCurrentUserContext: SelectsCurrentUserContextPort
   ) {}
 
   canActivate(
     activatedRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this._selectsLocalStorageContext.isLoggedIn().pipe(
+    return this._selectsCurrentUserContext.select('currentUserId').pipe(
       map((data) => {
         if (data) {
           return true;

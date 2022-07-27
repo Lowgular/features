@@ -73,18 +73,17 @@ export class FeatureListComponent {
       })
       .subscribe();
     combineLatest([
-      this._selectsCurrentUserContext.select(),
+      this._selectsCurrentUserContext.select('currentUserId'),
       this._selectsVotingContext.select(),
       this._getsOneFeatureDto.getOne(selectedFeature.id),
     ])
       .pipe(
         take(1),
-        tap(console.log),
         tap(([user, votedFeature, featureDto]) => {
-          if (user.id) {
+          if (user) {
             this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,
-              voters: [...featureDto.voters].concat(user.id),
+              voters: [...featureDto.voters].concat(user),
             });
           }
         })

@@ -95,7 +95,7 @@ export class FeaturesState
   }
 
   createFeature(command: CreateFeatureCommand): Observable<void> {
-    return this._selectsCurrentUserContext.select().pipe(
+    return this._selectsCurrentUserContext.select('currentUserId').pipe(
       take(1),
       switchMap((userContext) =>
         this._addsFeatureDto.add({
@@ -103,7 +103,7 @@ export class FeaturesState
           description: command.description,
           type: command.type,
           status: 'pending',
-          creator: userContext.id,
+          creator: userContext,
           voters: [],
         })
       )
