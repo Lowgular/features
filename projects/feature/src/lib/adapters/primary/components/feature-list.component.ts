@@ -4,7 +4,7 @@ import {
   Inject,
   ViewEncapsulation,
 } from '@angular/core';
-import { combineLatest, Observable, take, tap } from 'rxjs';
+import { combineLatest, Observable, switchMap, take, tap } from 'rxjs';
 import { FeatureListQuery } from '../../../application/ports/primary/query/feature-list.query';
 import {
   GETS_CURRENT_FEATURE_LIST_QUERY,
@@ -63,7 +63,7 @@ export class FeatureListComponent {
     private _getsOneFeatureDto: GetsOneFeatureDtoPort
   ) {}
 
-  onVotingIconClicked(selectedFeature: FeatureListItemQuery): void {
+  onVotingIconClicked(selectedFeature: FeatureListItemQuery) {
     this._setsStateVotingContext
       .setState({
         votedFeatureId: selectedFeature.id,
@@ -76,7 +76,7 @@ export class FeatureListComponent {
     ])
       .pipe(
         take(1),
-        tap(([user, votedFeature, featureDto]) => {
+        switchMap(([user, votedFeature, featureDto]) => {
           if (!featureDto.voters.includes(user as string)) {
             this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,

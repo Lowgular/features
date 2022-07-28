@@ -7,5 +7,5 @@ export const SELECTS_CURRENT_USER_CONTEXT =
   );
 
 export interface SelectsCurrentUserContextPort {
-  select(key: string): Observable<string | null>;
+  select(key: string): Observable<string>;
 }
