@@ -2,10 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { combineLatest, Observable, take, tap } from 'rxjs';
 import { FeatureListQuery } from '../../../application/ports/primary/query/feature-list.query';
+import { VotingContext } from '../../../application/ports/secondary/context/voting.context';
 import {
   GETS_CURRENT_FEATURE_LIST_QUERY,
   GetsCurrentFeatureListQueryPort,
@@ -39,11 +41,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeatureListComponent {
-  liked = false;
-
-  toggleVotingIcon() {
-    this.liked = !this.liked;
-  }
 
   featureListQuery$: Observable<FeatureListQuery> =
     this._getsCurrentFeatureListQuery.getCurrentFeatureListQuery();
@@ -95,3 +92,4 @@ export class FeatureListComponent {
       .subscribe();
   }
 }
+
