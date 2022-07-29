@@ -41,11 +41,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeatureListComponent {
-  liked = false;
-
-  toggleVotingIcon() {
-    this.liked = !this.liked;
-  }
 
   featureListQuery$: Observable<FeatureListQuery> =
     this._getsCurrentFeatureListQuery.getCurrentFeatureListQuery();
@@ -69,51 +64,32 @@ export class FeatureListComponent {
     this._setsStateVotingContext
       .setState({
         votedFeatureId: selectedFeature.id,
-        isVoted: true,
       })
       .subscribe();
     combineLatest([
-      this._selectsCurrentUserContext.select(),
+      this._selectsCurrentUserContext.select('currentUserId'),
       this._selectsVotingContext.select(),
       this._getsOneFeatureDto.getOne(selectedFeature.id),
     ])
       .pipe(
         take(1),
-        tap(console.log),
         tap(([user, votedFeature, featureDto]) => {
-          if (user.id) {
+          if (!featureDto.voters.includes(user as string)) {
             this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,
-              voters: [...featureDto.voters].concat(user.id),
+              voters: [...featureDto.voters].concat(user as string),
+            });
+          } else if (featureDto.voters.includes(user as string)) {
+            let votersSet = new Set(featureDto.voters);
+            votersSet.delete(user as string);
+            this._setsFeatureDto.set({
+              id: votedFeature.votedFeatureId,
+              voters: [...votersSet],
             });
           }
         })
       )
       .subscribe();
   }
-
-  // votingContext$: Observable<Partial<VotingContext>> =
-  //   this._selectsVotingContext.select().pipe(tap(console.log));
 }
 
-// onVotingIconClicked(selectedFeature: FeatureListItemQuery): void {
-//   this._selectsVotingContext
-//     .select()
-//     .pipe(
-//       take(1),
-//       tap((context) => {
-//         if (context.isVoted === false) {
-//           this._setsStateVotingContext.setState({
-//             votedFeatureId: selectedFeature.id,
-//             isVoted: true,
-//           });
-//         } else {
-//           this._setsStateVotingContext.setState({
-//             votedFeatureId: 'nie lubie',
-//             isVoted: false,
-//           });
-//         }
-//       })
-//     )
-//     .subscribe();
-// }

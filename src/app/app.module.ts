@@ -5,8 +5,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InMemoryCurrentUserStorageModule } from '@shared';
-import { LocalStorageModule } from '@user-auth';
+import { CurrentUserStorageModule } from '@shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,8 +14,7 @@ import { LocalStorageModule } from '@user-auth';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
-    InMemoryCurrentUserStorageModule,
-    LocalStorageModule,
+    CurrentUserStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

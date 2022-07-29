@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap, take, tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 import {
   ADDS_CREDENTIALS_DTO,
   AddsCredentialsDtoPort,
@@ -15,10 +15,6 @@ import {
   SetsStateCurrentUserContextPort,
   SETS_STATE_CURRENT_USER_CONTEXT,
 } from 'projects/shared/src/lib/application/ports/secondary/context/sets-state-current-user.context-port';
-import {
-  SetsStateLocalStorageContextPort,
-  SETS_STATE_LOCAL_STORAGE_CONTEXT,
-} from '../../../application/ports/secondary/context/sets-state-local-storage.context-port';
 
 @Component({
   selector: 'lib-login',
@@ -37,8 +33,6 @@ export class LoginComponent {
     private _addsCredentialsDto: AddsCredentialsDtoPort,
     @Inject(SETS_STATE_CURRENT_USER_CONTEXT)
     private _setsStateCurrentUserContext: SetsStateCurrentUserContextPort,
-    @Inject(SETS_STATE_LOCAL_STORAGE_CONTEXT)
-    private _setsStateLocalStorageContext: SetsStateLocalStorageContextPort,
     private _router: Router
   ) {}
 
@@ -51,13 +45,7 @@ export class LoginComponent {
       .pipe(
         take(1),
         tap((data) =>
-          this._setsStateLocalStorageContext.setLocalStorage(
-            'accessToken',
-            data.accessToken
-          )
-        ),
-        switchMap((response) =>
-          this._setsStateCurrentUserContext.setState({ id: response.id })
+          this._setsStateCurrentUserContext.setState('currentUserId', data.id)
         )
       )
       .subscribe(() => {

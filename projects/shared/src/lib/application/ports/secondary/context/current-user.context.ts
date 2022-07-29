@@ -1,3 +1,3 @@
 export interface CurrentUserContext {
-  readonly id: string;
+  readonly currentUserId: string;
 }

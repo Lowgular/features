@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { InMemoryCurrentUserStorage } from './in-memory-current-user.storage';
+import { CurrentUserStorage } from './current-user.storage';
 import { SETS_STATE_CURRENT_USER_CONTEXT } from '../../../application/ports/secondary/context/sets-state-current-user.context-port';
 import { SELECTS_CURRENT_USER_CONTEXT } from '../../../application/ports/secondary/context/selects-current-user.context-port';
 
@@ -7,16 +7,16 @@ import { SELECTS_CURRENT_USER_CONTEXT } from '../../../application/ports/seconda
   imports: [],
   declarations: [],
   providers: [
-    InMemoryCurrentUserStorage,
+    CurrentUserStorage,
     {
       provide: SETS_STATE_CURRENT_USER_CONTEXT,
-      useExisting: InMemoryCurrentUserStorage,
+      useExisting: CurrentUserStorage,
     },
     {
       provide: SELECTS_CURRENT_USER_CONTEXT,
-      useExisting: InMemoryCurrentUserStorage,
+      useExisting: CurrentUserStorage,
     },
   ],
   exports: [],
 })
-export class InMemoryCurrentUserStorageModule {}
+export class CurrentUserStorageModule {}
