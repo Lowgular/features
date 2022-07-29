@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { combineLatest, Observable, take, tap } from 'rxjs';
+import { combineLatest, Observable, switchMap, take, tap } from 'rxjs';
 import { FeatureListQuery } from '../../../application/ports/primary/query/feature-list.query';
 import { VotingContext } from '../../../application/ports/secondary/context/voting.context';
 import {
@@ -34,6 +34,7 @@ import {
   GETS_ONE_FEATURE_DTO,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
 
+
 @Component({
   selector: 'lib-feature-list',
   templateUrl: './feature-list.component.html',
@@ -60,7 +61,8 @@ export class FeatureListComponent {
     private _getsOneFeatureDto: GetsOneFeatureDtoPort
   ) {}
 
-  onVotingIconClicked(selectedFeature: FeatureListItemQuery): void {
+
+  onVotingIconClicked(selectedFeature: FeatureListItemQuery) {
     this._setsStateVotingContext
       .setState({
         votedFeatureId: selectedFeature.id,
@@ -73,23 +75,24 @@ export class FeatureListComponent {
     ])
       .pipe(
         take(1),
-        tap(([user, votedFeature, featureDto]) => {
+        switchMap(([user, votedFeature, featureDto]) => {
           if (!featureDto.voters.includes(user as string)) {
-            this._setsFeatureDto.set({
+            return this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,
               voters: [...featureDto.voters].concat(user as string),
             });
-          } else if (featureDto.voters.includes(user as string)) {
+          } else {
             let votersSet = new Set(featureDto.voters);
             votersSet.delete(user as string);
-            this._setsFeatureDto.set({
+            return this._setsFeatureDto.set({
+
               id: votedFeature.votedFeatureId,
               voters: [...votersSet],
             });
           }
         })
       )
-      .subscribe();
+      .subscribe(() => location.reload());
   }
 }
 

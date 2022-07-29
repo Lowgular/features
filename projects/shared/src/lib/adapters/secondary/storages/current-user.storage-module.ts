@@ -16,6 +16,10 @@ import { SELECTS_CURRENT_USER_CONTEXT } from '../../../application/ports/seconda
       provide: SELECTS_CURRENT_USER_CONTEXT,
       useExisting: CurrentUserStorage,
     },
+    {
+      provide: Storage,
+      useValue: localStorage,
+    },
   ],
   exports: [],
 })

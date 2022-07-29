@@ -7,11 +7,14 @@ import { SelectsCurrentUserContextPort } from '../../../application/ports/second
 export class CurrentUserStorage
   implements SetsStateCurrentUserContextPort, SelectsCurrentUserContextPort
 {
+  constructor(private _localStorage: Storage) {}
+
   setState(key: string, value: string): Observable<void> {
-    return of(localStorage.setItem(key, value));
+    return of(this._localStorage.setItem(key, value));
   }
 
-  select(key: string): Observable<string | null> {
-    return of(localStorage.getItem('currentUserId'));
+  select(key: string): Observable<string> {
+    return of(this._localStorage.getItem('currentUserId') as string);
+
   }
 }
