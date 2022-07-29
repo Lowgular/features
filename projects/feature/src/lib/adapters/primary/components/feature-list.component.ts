@@ -31,6 +31,14 @@ import {
   GetsOneFeatureDtoPort,
   GETS_ONE_FEATURE_DTO,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
+import {
+  SetsStateFeatureContextPort,
+  SETS_STATE_FEATURE_CONTEXT,
+} from '../../../application/ports/secondary/context/sets-state-feature.context-port';
+import {
+  GetsAllFeatureDtoPort,
+  GETS_ALL_FEATURE_DTO,
+} from '../../../application/ports/secondary/dto/gets-all-feature.dto-port';
 
 @Component({
   selector: 'lib-feature-list',
@@ -78,20 +86,20 @@ export class FeatureListComponent {
         take(1),
         switchMap(([user, votedFeature, featureDto]) => {
           if (!featureDto.voters.includes(user as string)) {
-            this._setsFeatureDto.set({
+            return this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,
               voters: [...featureDto.voters].concat(user as string),
             });
-          } else if (featureDto.voters.includes(user as string)) {
+          } else {
             let votersSet = new Set(featureDto.voters);
             votersSet.delete(user as string);
-            this._setsFeatureDto.set({
+            return this._setsFeatureDto.set({
               id: votedFeature.votedFeatureId,
               voters: [...votersSet],
             });
           }
         })
       )
-      .subscribe();
+      .subscribe(() => location.reload());
   }
 }

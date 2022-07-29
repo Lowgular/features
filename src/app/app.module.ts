@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CurrentUserStorageModule, LocalServiceModule } from '@shared';
+import { CurrentUserStorageModule } from '@shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +15,6 @@ import { CurrentUserStorageModule, LocalServiceModule } from '@shared';
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     CurrentUserStorageModule,
-    LocalServiceModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
