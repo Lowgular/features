@@ -15,5 +15,6 @@ export class CurrentUserStorage
 
   select(key: string): Observable<string> {
     return of(this._localStorage.getItem('currentUserId') as string);
+
   }
 }

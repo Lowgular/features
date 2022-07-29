@@ -42,11 +42,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeatureListComponent {
-  liked = false;
-
-  toggleVotingIcon() {
-    this.liked = !this.liked;
-  }
 
   featureListQuery$: Observable<FeatureListQuery> =
     this._getsCurrentFeatureListQuery.getCurrentFeatureListQuery();
@@ -90,6 +85,7 @@ export class FeatureListComponent {
             let votersSet = new Set(featureDto.voters);
             votersSet.delete(user as string);
             return this._setsFeatureDto.set({
+
               id: votedFeature.votedFeatureId,
               voters: [...votersSet],
             });
@@ -99,5 +95,4 @@ export class FeatureListComponent {
       .subscribe(() => location.reload());
   }
 }
-
 
