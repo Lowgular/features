@@ -2,10 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  OnInit,
   ViewEncapsulation,
 } from '@angular/core';
 import { combineLatest, Observable, switchMap, take, tap } from 'rxjs';
 import { FeatureListQuery } from '../../../application/ports/primary/query/feature-list.query';
+import { VotingContext } from '../../../application/ports/secondary/context/voting.context';
 import {
   GETS_CURRENT_FEATURE_LIST_QUERY,
   GetsCurrentFeatureListQueryPort,
@@ -31,14 +33,7 @@ import {
   GetsOneFeatureDtoPort,
   GETS_ONE_FEATURE_DTO,
 } from '../../../application/ports/secondary/dto/gets-one-feature.dto-port';
-import {
-  SetsStateFeatureContextPort,
-  SETS_STATE_FEATURE_CONTEXT,
-} from '../../../application/ports/secondary/context/sets-state-feature.context-port';
-import {
-  GetsAllFeatureDtoPort,
-  GETS_ALL_FEATURE_DTO,
-} from '../../../application/ports/secondary/dto/gets-all-feature.dto-port';
+
 
 @Component({
   selector: 'lib-feature-list',
@@ -70,6 +65,7 @@ export class FeatureListComponent {
     @Inject(GETS_ONE_FEATURE_DTO)
     private _getsOneFeatureDto: GetsOneFeatureDtoPort
   ) {}
+
 
   onVotingIconClicked(selectedFeature: FeatureListItemQuery) {
     this._setsStateVotingContext
@@ -103,3 +99,5 @@ export class FeatureListComponent {
       .subscribe(() => location.reload());
   }
 }
+
+
