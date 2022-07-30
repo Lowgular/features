@@ -12,15 +12,9 @@
     </div>
 
     <div class="flex flex-col ml-5 w-11/12">
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <div class="flex justify-between w-10/12">
           <p class="text-lg font-semibold">{{ feature.title }}</p>
-          <a
-            mat-raised-button
-            [routerLink]="'/edit-feature/' + feature.id"
-            class="text-lg"
-            >EDIT</a
-          >
         </div>
         <div *ngIf="feature.isBug; else isFeature">
           <p class="text-pink-600 text-lg font-medium">{{ feature.type }}</p>
@@ -28,6 +22,15 @@
         <ng-template #isFeature>
           <p class="text-green-600 text-lg font-medium">{{ feature.type }}</p>
         </ng-template>
+        <div class="ml-5">
+          <a
+            mat-mini-fab
+            color="primary"
+            [routerLink]="'/edit-feature/' + feature.id"
+            class="scale-50"
+            ><mat-icon>edit</mat-icon></a
+          >
+        </div>
       </div>
       <p class="w-9/12">{{ feature.description }}</p>
     </div>
