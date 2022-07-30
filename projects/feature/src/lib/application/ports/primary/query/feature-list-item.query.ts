@@ -1,5 +1,7 @@
 export class FeatureListItemQuery {
   public readonly voters: number;
+  public readonly isBug: boolean;
+
   constructor(
     public readonly title: string,
     public readonly description: string,
@@ -9,5 +11,6 @@ export class FeatureListItemQuery {
     private readonly _voters: string[]
   ) {
     this.voters = [...new Set(this._voters)].length;
+    this.isBug = this.type === 'bug' ? true : false;
   }
 }

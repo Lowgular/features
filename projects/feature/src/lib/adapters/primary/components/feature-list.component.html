@@ -5,11 +5,7 @@
   >
     <div class="flex justify-center items-center w-1/12 mt-2">
       <div (click)="onVotingIconClicked(feature)">
-        <button
-          mat-icon-button
-          color="accent"
-          [matBadge]="feature.voters"
-        >
+        <button mat-icon-button color="accent" [matBadge]="feature.voters">
           <mat-icon class="scale-150">favorite</mat-icon>
         </button>
       </div>
@@ -26,10 +22,14 @@
             >EDIT</a
           >
         </div>
-        <p class="text-pink-500 text-lg font-medium">{{ feature.type }}</p>
+        <div *ngIf="feature.isBug; else isFeature">
+          <p class="text-pink-600 text-lg font-medium">{{ feature.type }}</p>
+        </div>
+        <ng-template #isFeature>
+          <p class="text-green-600 text-lg font-medium">{{ feature.type }}</p>
+        </ng-template>
       </div>
       <p class="w-9/12">{{ feature.description }}</p>
     </div>
   </li>
 </ul>
-
